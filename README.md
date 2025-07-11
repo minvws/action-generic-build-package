@@ -4,7 +4,7 @@
 - The pipeline is designed to be as generic as possible, so they can be easily reused in any project.
 - This repository is a part of the generic GitHub Actions pipeline collection that can be used in any project.
 
-### Usage
+## Usage
 
 Here are basic examples of how you can integrate it in your project.
 
@@ -14,7 +14,7 @@ Here are basic examples of how you can integrate it in your project.
 This workflow is executed automatically on push of tags.
 
 In the code below you need to change the `working_directory` and `package_file_name` and `include_paths` according to the requirements of the project.
-See the configuration section.
+See the [configuration section](#configuration).
 
 ```yml
 name: Build release package
@@ -44,7 +44,7 @@ jobs:
 
 This workflow is executed automatically on the push of tags. The workflow will check out the repo and the action won't.
 
-In the code below you need to replace the `<package_file_name>` and `<working_directory>`. See the [configuration section](#configuration-2).
+In the code below you need to replace the `<package_file_name>` and `<working_directory>`. See the [configuration section](#configuration).
 
 ```yml
 name: Build release package
