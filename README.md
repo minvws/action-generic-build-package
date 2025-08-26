@@ -6,13 +6,6 @@ This repository provides a reusable GitHub Action for creating a source build pa
 
 To use the action, add it to a workflow in your repository:
 
-Here are basic examples of how you can integrate it in your project.
-
-<details>
-  <summary>Example workflow</summary>
-
-This workflow is executed automatically on push of tags.
-
 ```yml
 name: Build release package
 
@@ -33,9 +26,9 @@ jobs:
                   package_file_name: "nl-irealisatie-project-name"
 ```
 
-Change the `working_directory`, `package_file_name` and `include_paths` according to the requirements of the project. See the [configuration section](#configuration).
+Replace `working_directory`, `package_file_name` and `include_paths` according to the requirements of the project. See [Configuration](#configuration) for details.
 
-Note that the workflow doesn't use a checkout step. This action already checks out the repository by default. You can use the `checkout_repository` option to disable this behavior.
+In this basic example, the workflow is executed automatically on push of tags.
 
 ### Configuration
 
