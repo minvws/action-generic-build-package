@@ -20,13 +20,13 @@ inputs:
   checkout_repository:
     description: "Whether to checkout the repository (true or false)."
     required: false
-    default: 'true'
+    default: "false"
 
 runs:
   using: "composite"
   steps:
     - name: Checkout code
-      if: inputs.checkout_repository == 'true'
+      if: inputs.checkout_repository == "true"
       uses: actions/checkout@v5
 
     - name: Extract version from tag
