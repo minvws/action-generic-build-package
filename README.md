@@ -18,6 +18,9 @@ jobs:
     build-src-package:
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
             - name: Create package
               uses: minvws/action-generic-build-package@v1
               with:
@@ -34,12 +37,11 @@ In this basic example, the workflow is executed automatically on push of tags.
 
 The action has the following inputs:
 
-- `include_paths`: A space-separated list with files and directories to include in the package relative to the working_directory.
-- `package_file_name`: Name of the package (without extension), for example: `nl-example-package`.
-- `working_directory`: The base directory containing the source code, only required if it does not need to be the root folder.
-- `version_json_path`: The location where version.json needs to be stored. For example `public/version.json`. Default: `version.json`.
-- `checkout_repository`: Boolean value inside string to enable or disable checkout repository
-  in the action. For example `"true"` or `"false"`. Default `"true"`.
+- `package_file_name`: Name of the package (without extension), for example: `nl-example-package`. Required.
+- `include_paths`: A space-separated list with files and directories to include in the package, relative to the `working_directory`. Optional, default: `"."`.
+- `working_directory`: The base directory containing the source code, relative to the project root. Optional, default: `"."`.
+- `version_json_path`: The location where version.json needs to be stored. For example `public/version.json`. Optional, default: `version.json`.
+- `checkout_repository`: Whether to checkout the repository in the action. Boolean string, for example `"true"`. Optional, default: `"false"`.
 
 ### Result
 
