@@ -1,10 +1,10 @@
-# Generic build package
+# Generic build package GitHub Action
 
-- This pipeline is designed to export a source build package for an application.
-- The pipeline is designed to be as generic as possible, so they can be easily reused in any project.
-- This repository is a part of the generic GitHub Actions pipeline collection that can be used in any project.
+This repository provides a reusable GitHub Action for creating a source build package for an application and uploading it as a CI artifact.
 
 ## Usage
+
+To use the action, add it to a workflow in your repository:
 
 Here are basic examples of how you can integrate it in your project.
 
@@ -13,79 +13,40 @@ Here are basic examples of how you can integrate it in your project.
 
 This workflow is executed automatically on push of tags.
 
-In the code below you need to change the `working_directory` and `package_file_name` and `include_paths` according to the requirements of the project.
-See the [configuration section](#configuration).
-
 ```yml
 name: Build release package
 
 on:
-  push:
-    tags:
-      - v*
+    push:
+        tags:
+            - v*
 
 jobs:
-  build-src-package:
-    runs-on: ubuntu-latest
-    steps:
-      # Using the action
-      - name: Create source package
-        uses: minvws/action-generic-build-package/.github/actions/build-package@main
-        with:
-          working_directory: "."
-          include_paths: "app static tools app.conf.example HOSTING_CHANGELOG.md"
-          package_file_name: "nl-irealisatie-project-name"
+    build-src-package:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Create package
+              uses: minvws/action-generic-build-package@v1
+              with:
+                  working_directory: "."
+                  include_paths: "app static tools app.conf.example HOSTING_CHANGELOG.md"
+                  package_file_name: "nl-irealisatie-project-name"
 ```
 
-</details>
+Change the `working_directory`, `package_file_name` and `include_paths` according to the requirements of the project. See the [configuration section](#configuration).
 
-<details>
-  <summary>Example workflow self checkout</summary>
-
-This workflow is executed automatically on the push of tags. The workflow will check out the repo and the action won't.
-
-In the code below you need to replace the `<package_file_name>` and `<working_directory>`. See the [configuration section](#configuration).
-
-```yml
-name: Build release package
-
-on:
-  push:
-    tags:
-      - v*
-
-jobs:
-  build-src-package:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Extract version from tag
-        shell: bash
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-
-      # Using the action
-      - name: Build src package
-        uses: minvws/action-generic-build-package/.github/actions/build-package@main
-        with:
-          checkout_repository: "false"
-          include_paths: "app static tools app.conf.example HOSTING_CHANGELOG.md"
-          package_file_name: "nl-irealisatie-project-name"
-```
-
-</details>
+Note that the workflow doesn't use a checkout step. This action already checks out the repository by default. You can use the `checkout_repository` option to disable this behavior.
 
 ### Configuration
 
-The action has inputs. The inputs are:
+The action has the following inputs:
 
-- include_paths: A space seperated list with files and directories to include in the package relative to the working_directory.
-- package_file_name: Name of the package (without extension), for example: `nl-example-package`.
-- working_directory: The base directory containing the source code, only required if it does not need to be the root folder.
-- version_json_path: The location where version.json needs to be stored. For example `public/version.json`. Default: `version.json`.
-- checkout_repository: Boolean value inside string to enable or disable checkout repository
-  in the action. For example `'true'` or `'false'`. Default `'true'`.
+- `include_paths`: A space-separated list with files and directories to include in the package relative to the working_directory.
+- `package_file_name`: Name of the package (without extension), for example: `nl-example-package`.
+- `working_directory`: The base directory containing the source code, only required if it does not need to be the root folder.
+- `version_json_path`: The location where version.json needs to be stored. For example `public/version.json`. Default: `version.json`.
+- `checkout_repository`: Boolean value inside string to enable or disable checkout repository
+  in the action. For example `"true"` or `"false"`. Default `"true"`.
 
 ### Result
 
@@ -100,3 +61,11 @@ The uploaded artifact will have a limited lifetime depending on what is currentl
 
 If you want to contribute a new pipeline, please check the reusable workflow guidelines in the
 [GitHub documentation](https://docs.github.com/en/actions/using-workflows/reusing-workflows#creating-a-reusable-workflow).
+
+## License
+
+This repository is released under the EUPL 1.2 license. See [LICENSE](./LICENSE) for details.
+
+## Part of iCore
+
+This package is part of the iCore project.
